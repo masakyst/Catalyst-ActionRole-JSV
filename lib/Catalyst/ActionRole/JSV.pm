@@ -9,12 +9,13 @@ use JSON::MaybeXS ();
 
 our $VERSION = '0.01';
 
-sub BUILD { }
+our $JSV;
 
 after BUILD => sub {
     my $class = shift;
     my ($args) = @_;
     my $attr = $args->{attributes};
+    $JSV = JSV::Validator->new;
 };
 
 
@@ -23,12 +24,10 @@ around execute => sub {
     my $self = shift;
     my ($controller, $c) = @_;
 
-    my $jsv = JSV::Validator->new;
-
     my $params = $c->req->body_data;
     my $request_schema = JSON::MaybeXS::decode_json(Path::Class::file($c->config->{home}, $self->attributes->{Request}->[0])->slurp);
 
-    my $request_result = $jsv->validate($request_schema, $params);
+    my $request_result = $JSV->validate($request_schema, $params);
 
     if ($request_result->get_error) {
         $c->response->status(400);
