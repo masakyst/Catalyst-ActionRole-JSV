@@ -42,7 +42,7 @@
             "JSON::MaybeXS" : "0",
             "JSV" : "0",
             "Moose" : "0",
-            "Path::Tiny" : "0",
+            "Path::Class" : "0",
             "namespace::autoclean" : "0"
          }
       },

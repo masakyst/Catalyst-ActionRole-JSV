@@ -4,7 +4,7 @@ requires 'Moose';
 requires 'Catalyst::Controller::ActionRole';
 requires 'namespace::autoclean';
 requires 'JSV';
-requires 'Path::Tiny';
+requires 'Path::Class';
 requires 'JSON::MaybeXS';
 
 on test => sub {

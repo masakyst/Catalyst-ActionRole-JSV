@@ -4,7 +4,7 @@ use strict;
 use Moose::Role;
 use namespace::autoclean;
 use JSV::Validator;
-use Path::Tiny;
+use Path::Class ();
 use JSON::MaybeXS ();
 
 our $VERSION = '0.01';
@@ -14,7 +14,6 @@ sub BUILD { }
 after BUILD => sub {
     my $class = shift;
     my ($args) = @_;
-
     my $attr = $args->{attributes};
 };
 
@@ -27,7 +26,7 @@ around execute => sub {
     my $jsv = JSV::Validator->new;
 
     my $params = $c->req->body_data;
-    my $request_schema = JSON::MaybeXS::decode_json(path($self->attributes->{Request}->[0])->slurp);
+    my $request_schema = JSON::MaybeXS::decode_json(Path::Class::file($c->config->{home}, $self->attributes->{Request}->[0])->slurp);
 
     my $request_result = $jsv->validate($request_schema, $params);
 
