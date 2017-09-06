@@ -39,7 +39,7 @@ around execute => sub {
             $params->{$key} = $c->req->arguments->[$prop->{captureargs} - 1];
         }
         if (defined $params->{$key} && $prop->{type} eq 'integer' && $params->{$key} =~ /^[0-9]+$/) {
-            $params->{$key} = int $val;
+            $params->{$key} = int $params->{$key};
         }
     }
     
