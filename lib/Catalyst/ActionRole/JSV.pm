@@ -32,27 +32,23 @@ around execute => sub {
 
     my $request_schema = JSON::MaybeXS::decode_json(Path::Class::file($c->config->{home}, $self->attributes->{JSONSchema}->[0])->slurp);
 
-    # find url capture args
-    if (scalar @{ $c->req->arguments}) {
-        for my $key (keys %{ $request_schema->{properties} }) {
-            my $prop = $request_schema->{properties}->{$key};
-            # json property "captureargs" : "number"
-            if ($prop->{captureargs}) {
-                my $captureval = $c->req->arguments->[$prop->{captureargs} - 1];
-                if (defined $captureval) {
-                    if ($prop->{type} eq 'integer' && $captureval =~ /^[0-9]+$/) {
-                        $captureval = int $captureval; 
-                    }
-                    $params->{$key} = $captureval;
-                }
-            }
+    for my $key (keys %{ $request_schema->{properties} }) {
+        my $prop = $request_schema->{properties}->{$key};
+
+        if ($prop->{captureargs}) {
+            $params->{$key} = $c->req->arguments->[$prop->{captureargs} - 1];
+        }
+        if (defined $params->{$key} && $prop->{type} eq 'integer' && $params->{$key} =~ /^[0-9]+$/) {
+            $params->{$key} = int $val;
         }
     }
- 
+    
     my $request_result = $JSV->validate($request_schema, $params);
 
     if ($request_result->get_error) {
         $c->log->debug("json schema validation failed: ".$request_result->errors->[0]->{message});
+
+        # todo: return response
         $c->response->status(400);
         $c->stash->{json} = {message => sprintf("%s: %s", $request_result->errors->[0]->{pointer}, $request_result->errors->[0]->{message})};
         return;
@@ -61,7 +57,7 @@ around execute => sub {
 
     my $orig_response = $self->$orig(@_);
 
-    # todo: response schema ..
+    # todo: not implemented response schema
 
     return $orig_response;
 };
