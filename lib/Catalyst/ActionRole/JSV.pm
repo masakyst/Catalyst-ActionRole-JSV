@@ -34,11 +34,15 @@ around execute => sub {
 
     # find url capture args
     if (scalar @{ $c->req->arguments}) {
-        # json property "captureargs" : "number"
         for my $key (keys %{ $request_schema->{properties} }) {
-            if ($request_schema->{properties}->{$key}->{captureargs}) {
-                my $captureval = $c->req->arguments->[$request_schema->{properties}->{$key}->{captureargs} - 1];
+            my $prop = $request_schema->{properties}->{$key};
+            # json property "captureargs" : "number"
+            if ($prop->{captureargs}) {
+                my $captureval = $c->req->arguments->[$prop->{captureargs} - 1];
                 if (defined $captureval) {
+                    if ($prop->{type} eq 'integer' && $captureval =~ /^[0-9]+$/) {
+                        $captureval = int $captureval; 
+                    }
                     $params->{$key} = $captureval;
                 }
             }
@@ -49,7 +53,6 @@ around execute => sub {
 
     if ($request_result->get_error) {
         $c->log->debug("json schema validation failed: ".$request_result->errors->[0]->{message});
-        # todo: return response
         $c->response->status(400);
         $c->stash->{json} = {message => sprintf("%s: %s", $request_result->errors->[0]->{pointer}, $request_result->errors->[0]->{message})};
         return;
@@ -58,7 +61,7 @@ around execute => sub {
 
     my $orig_response = $self->$orig(@_);
 
-    # todo: validate response schema ..
+    # todo: response schema ..
 
     return $orig_response;
 };
