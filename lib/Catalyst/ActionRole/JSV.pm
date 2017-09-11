@@ -7,9 +7,10 @@ use JSV::Validator;
 use Path::Class ();
 use JSON::MaybeXS ();
 
-our $VERSION = '0.01';
 
+our $VERSION = '0.01';
 our $JSV;
+our %SCHEMA = ();
 
 
 after BUILD => sub {
@@ -27,11 +28,22 @@ around execute => sub {
 
     my $params = $c->req->parameters;
 
-    my $load_schema_json = Path::Class::file($c->config->{home}, $self->attributes->{JSONSchema}->[0]);
-    $c->log->debug("load file json schema file: ".$load_schema_json->stringify);
+    my $request_schema; 
+    my $json_file = $self->attributes->{JSONSchema}->[0];
 
-    my $request_schema = JSON::MaybeXS::decode_json(Path::Class::file($c->config->{home}, $self->attributes->{JSONSchema}->[0])->slurp);
+    if (exists $SCHEMA{ $json_file } ) {
+        $request_schema = $SCHEMA{ $json_file };
+        $c->log->debug("load memory json schema: ".$json_file);
+    }
+    # first load
+    else {
+        my $load_schema_json = Path::Class::file($c->config->{home}, $json_file);
+        $request_schema = JSON::MaybeXS::decode_json($load_schema_json->slurp);
+        $SCHEMA{ $json_file } = $request_schema; 
+        $c->log->debug("load file json schema: ".$json_file);
+    }
 
+    # find captureargs and convert integer parameter
     for my $key (keys %{ $request_schema->{properties} }) {
         my $prop = $request_schema->{properties}->{$key};
 
@@ -39,7 +51,7 @@ around execute => sub {
             $params->{$key} = $c->req->arguments->[$prop->{captureargs} - 1];
         }
         if (defined $params->{$key} && $prop->{type} eq 'integer' && $params->{$key} =~ /^[0-9]+$/) {
-            $params->{$key} = int $params->{$key};
+                $params->{$key} = int $params->{$key};
         }
     }
     
