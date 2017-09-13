@@ -25,6 +25,8 @@ around execute => sub {
     my $orig = shift;
     my $self = shift;
     my ($controller, $c) = @_;
+use Data::Dumper;
+print Dumper($c->config->{'View::JSON'}->{'expose_stash'});
 
     my $params = $c->req->parameters;
 
@@ -60,16 +62,14 @@ around execute => sub {
     if ($request_result->get_error) {
         $c->log->debug("json schema validation failed: ".$request_result->errors->[0]->{message});
 
-        # todo: return response
+        my $expose_stash = $c->config->{'View::JSON'}->{'expose_stash'} || 'json';
         $c->response->status(400);
-        $c->stash->{json} = {message => sprintf("%s: %s", $request_result->errors->[0]->{pointer}, $request_result->errors->[0]->{message})};
+        $c->stash->{$expose_stash} = {message => sprintf("%s: %s", $request_result->errors->[0]->{pointer}, $request_result->errors->[0]->{message})};
         return;
     }
     $c->log->debug("json schema validation success.");
 
     my $orig_response = $self->$orig(@_);
-
-    # todo: not implemented response schema
 
     return $orig_response;
 };
