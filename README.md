@@ -1,6 +1,6 @@
 # NAME
 
-Catalyst::ActionRole::JSV - Validate data against a JSON schema for Catalyst actions
+Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
 
 # SYNOPSIS
 

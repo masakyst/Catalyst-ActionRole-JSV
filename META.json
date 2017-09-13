@@ -1,5 +1,5 @@
 {
-   "abstract" : "Validate data against a JSON schema for Catalyst actions",
+   "abstract" : "A JSON Schema validator for Catalyst actions",
    "author" : [
       "Masaaki Saito <masakyst.public@gmail.com>"
    ],
