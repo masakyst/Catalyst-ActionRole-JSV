@@ -128,12 +128,28 @@ Catalyst::ActionRole::JSV is Validate data against a JSON schema for Catalyst ac
 Internally use the json schema draft4 validator called JSV. 
 
 
+=head2 Error Response
+
+On error it returns 400 http response status. The stash key to set the error message is 'View::JSON expose_stash' key.
+The default key if omitted is 'json'.
+
+    $c->stash->{'View::JSON expose_stash key'} = {message => 'JSV->validate->get_error'}
+
+myapp.yml config
+
+    name: MyApp
+    View::JSON:
+        expose_stash: 'json'
+
+
 =head1 SEE ALSO
 
 
 =over 2
 
 =item L<Catalyst::Controller>
+
+=item L<Catalyst::View::JSON>
 
 =item L<JSV::Validator>
 
