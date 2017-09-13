@@ -124,7 +124,7 @@ Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
 
 =head1 DESCRIPTION
 
-Catalyst::ActionRole::JSV is Validate data against a JSON schema for Catalyst actions.
+Catalyst::ActionRole::JSV is JSON Schema validator for Catalyst actions.
 Internally use the json schema draft4 validator called JSV. 
 
 
