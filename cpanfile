@@ -1,7 +1,7 @@
 
 requires 'Catalyst::Runtime' => '5.90050';
-requires 'Moose';
 requires 'Catalyst::Controller::ActionRole';
+requires 'Catalyst::View::JSON';
 requires 'namespace::autoclean';
 requires 'JSV';
 requires 'Path::Class';
