@@ -39,9 +39,9 @@
          "requires" : {
             "Catalyst::Controller::ActionRole" : "0",
             "Catalyst::Runtime" : "5.90050",
+            "Catalyst::View::JSON" : "0",
             "JSON::MaybeXS" : "0",
             "JSV" : "0",
-            "Moose" : "0",
             "Path::Class" : "0",
             "namespace::autoclean" : "0"
          }

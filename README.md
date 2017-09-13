@@ -49,9 +49,23 @@ Catalyst::ActionRole::JSV - Validate data against a JSON schema for Catalyst act
 Catalyst::ActionRole::JSV is Validate data against a JSON schema for Catalyst actions.
 Internally use the json schema draft4 validator called JSV. 
 
+## Error Response
+
+On error it returns 400 http response status. The stash key to set the error message is 'View::JSON expose\_stash' key.
+The default key if omitted is 'json'.
+
+    $c->stash->{'View::JSON expose_stash key'} = {message => 'JSV->validate->get_error'}
+
+myapp.yml config
+
+    name: MyApp
+    View::JSON:
+        expose_stash: 'json'
+
 # SEE ALSO
 
 - [Catalyst::Controller](https://metacpan.org/pod/Catalyst::Controller)
+- [Catalyst::View::JSON](https://metacpan.org/pod/Catalyst::View::JSON)
 - [JSV::Validator](https://metacpan.org/pod/JSV::Validator)
 
     Catalyst Advent Calendar 2013 / How to implement a super-simple REST API with Catalyst
