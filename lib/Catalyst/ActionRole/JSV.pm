@@ -14,9 +14,6 @@ our %SCHEMA = ();
 
 
 after BUILD => sub {
-    my $class = shift;
-    my ($args) = @_;
-    my $attr = $args->{attributes};
     $JSV = JSV::Validator->new;
 };
 
@@ -25,8 +22,6 @@ around execute => sub {
     my $orig = shift;
     my $self = shift;
     my ($controller, $c) = @_;
-use Data::Dumper;
-print Dumper($c->config->{'View::JSON'}->{'expose_stash'});
 
     my $params = $c->req->parameters;
 
