@@ -4,7 +4,7 @@ Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
 
 # SYNOPSIS
 
-    package MyApp::Controller::Course;
+    package MyApp::Controller::Item;
     use Moose;
     use namespace::autoclean;
 

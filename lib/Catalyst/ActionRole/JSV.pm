@@ -32,7 +32,6 @@ around execute => sub {
         $request_schema = $SCHEMA{ $json_file };
         $c->log->debug("load memory json schema: ".$json_file);
     }
-    # first load
     else {
         my $load_schema_json = Path::Class::file($c->config->{home}, $json_file);
         $request_schema = JSON::MaybeXS::decode_json($load_schema_json->slurp);
@@ -81,7 +80,7 @@ Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
 
 =head1 SYNOPSIS
 
-  package MyApp::Controller::Course;
+  package MyApp::Controller::Item;
   use Moose;
   use namespace::autoclean;
 
