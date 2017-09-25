@@ -25,6 +25,7 @@ Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
     # GET /item/:item_id
     sub lookup :GET Args(1) :Does(JSV) :JSONSchema(root/schema/lookup.json) {
         my ( $self, $c, $item_id ) = @_;
+        my $params = $c->request->parameters;
         ...
     }
 
@@ -38,8 +39,13 @@ Catalyst::ActionRole::JSV - A JSON Schema validator for Catalyst actions
                 "type": "integer",
                 "minLength": 1,
                 "maxLength": 9, 
-                "captureargs": 1  # In the case of URL CaptureArgs number 
-            }   
+                "captureargs": 1  # In the case of URL CaptureArgs
+            },   
+            "paramX": { 
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 12  
+            }, 
         },  
         "required": ["item_id"]
     } 
