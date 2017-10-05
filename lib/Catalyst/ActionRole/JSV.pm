@@ -23,7 +23,13 @@ around execute => sub {
     my $self = shift;
     my ($controller, $c) = @_;
 
-    my $params = $c->req->parameters;
+    my $params;
+    if ($c->req->method =~ /^(POST|PUT)+$/) {
+        $params = $c->req->body_data;
+    }   
+    else {
+        $params = $c->req->query_parameters;
+    }   
 
     my $request_schema; 
     my $json_file = $self->attributes->{JSONSchema}->[0];
