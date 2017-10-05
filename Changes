@@ -1,6 +1,8 @@
 Revision history for Catalyst-ActionRole-JSV
 
 {{$NEXT}}
+
+0.02  2017-10-05 22:58:48 JST
     - Fixed a bug in case of a PUT request
     - Changed find of 'captureargs' JSON Schema properties element key
 
