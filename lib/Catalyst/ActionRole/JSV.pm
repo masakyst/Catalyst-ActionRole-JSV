@@ -8,7 +8,7 @@ use Path::Class ();
 use JSON::MaybeXS ();
 
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our $JSV;
 our %SCHEMA = ();
 
@@ -48,10 +48,15 @@ around execute => sub {
     # find captureargs and convert integer parameter
     for my $key (keys %{ $request_schema->{properties} }) {
         my $prop = $request_schema->{properties}->{$key};
-
-        if ($prop->{captureargs}) {
-            $params->{$key} = $c->req->arguments->[$prop->{captureargs} - 1];
+        
+        # find URL captureargs 
+        for my $attr (keys %{ $prop }) {
+            if (lc $attr eq 'captureargs') {
+                $params->{$key} = $c->req->arguments->[$prop->{$attr} - 1];
+                last;
+            }
         }
+
         if (defined $params->{$key} && $prop->{type} eq 'integer' && $params->{$key} =~ /^[0-9]+$/) {
                 $params->{$key} = int $params->{$key};
         }

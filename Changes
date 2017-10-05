@@ -1,6 +1,8 @@
 Revision history for Catalyst-ActionRole-JSV
 
 {{$NEXT}}
+    - Fixed a bug in case of a PUT request
+    - Changed find of 'captureargs' JSON Schema properties element key
 
 0.01  2017-09-25 10:23:48 JST
-        - Initial release
+    - Initial release
