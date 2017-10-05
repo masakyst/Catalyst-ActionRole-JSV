@@ -6,6 +6,7 @@ requires 'namespace::autoclean';
 requires 'JSV';
 requires 'Path::Class';
 requires 'JSON::MaybeXS';
+requires 'Moose::Role';
 
 on test => sub {
     requires 'Test::More', '0.96';
