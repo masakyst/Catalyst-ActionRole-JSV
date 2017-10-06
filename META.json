@@ -42,6 +42,7 @@
             "Catalyst::View::JSON" : "0",
             "JSON::MaybeXS" : "0",
             "JSV" : "0",
+            "Moose::Role" : "0",
             "Path::Class" : "0",
             "namespace::autoclean" : "0"
          }
@@ -64,9 +65,10 @@
          "web" : "https://github.com/masakyst/Catalyst-ActionRole-JSV"
       }
    },
-   "version" : "0.02",
+   "version" : "0.03",
    "x_contributors" : [
-      "Masaaki Saito <masakyst.mobile@gmail.com>"
+      "Masaaki Saito <masakyst.mobile@gmail.com>",
+      "Mohammad S Anwar <mohammad.anwar@yahoo.com>"
    ],
    "x_serialization_backend" : "Cpanel::JSON::XS version 3.0225"
 }

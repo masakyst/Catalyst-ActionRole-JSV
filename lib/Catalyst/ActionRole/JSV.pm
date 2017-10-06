@@ -8,7 +8,7 @@ use Path::Class ();
 use JSON::MaybeXS ();
 
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 our $JSV;
 our %SCHEMA = ();
 

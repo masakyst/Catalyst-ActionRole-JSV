@@ -1,6 +1,7 @@
 Revision history for Catalyst-ActionRole-JSV
 
 {{$NEXT}}
+    - Fixed missing prereqs Moose::Role as reported by CPANTS. (manwar)
 
 0.02  2017-10-05 22:58:48 JST
     - Fixed a bug in case of a PUT request
